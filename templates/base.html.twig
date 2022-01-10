@@ -55,6 +55,7 @@
 			</div>
 		</nav>
 		{% if app.user %}<p>Connecté en tant que : {{app.user.name}} {{app.user.firstname}}</p>{% endif %}
+		
 		{% block content %}{% endblock %}
 
 		<script src=" {{asset('assets/js/bootstrap.bundle.min.js')}} "></script>
