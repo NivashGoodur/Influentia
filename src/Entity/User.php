@@ -46,6 +46,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $firstname;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $premium;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +160,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getPremium(): ?bool
+    {
+        return $this->premium;
+    }
+
+    public function setPremium(bool $premium): self
+    {
+        $this->premium = $premium;
 
         return $this;
     }

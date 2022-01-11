@@ -32,6 +32,11 @@ class Article
      */
     private $creation_date;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $premium;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Article
     public function setCreationDate(\DateTimeInterface $creation_date): self
     {
         $this->creation_date = $creation_date;
+
+        return $this;
+    }
+
+    public function getPremium(): ?bool
+    {
+        return $this->premium;
+    }
+
+    public function setPremium(bool $premium): self
+    {
+        $this->premium = $premium;
 
         return $this;
     }
