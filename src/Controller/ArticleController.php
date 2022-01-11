@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\ArticleOrder;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,9 +18,10 @@ class ArticleController extends AbstractController
 
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
         $this->entityManager = $entityManager;
+        $this->security = $security;
     }
 
 
@@ -104,16 +107,44 @@ class ArticleController extends AbstractController
      */
     public function showArticle($id): Response
     {
-        
-
         $article = $this->entityManager->getRepository(Article::class)->find($id);
-
 
 
 
 
         return $this->render('article/article.html.twig', [
             'article' => $article,
+        ]);
+    }
+
+
+    /**
+     * @Route("/article/premium/{id}", name="article_premium")
+     */
+    public function showArticlePremium($id): Response
+    {
+
+        //Redirection sur la page de connexion si l'utilisateur n'est pas connecté 
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
+
+        $user = $this->security->getUser();
+        $userId = $user->getId();
+
+        //Récupération et vérification que l'article a bien été acheté par l'utilisateur connecté
+        $article_order = $this->entityManager->getRepository(ArticleOrder::class)->findOneByArticleId($id, $userId);
+
+        if ($article_order) {
+            $article = $this->entityManager->getRepository(Article::class)->find($id);
+        } else {
+            $article = null;
+        }
+
+
+        return $this->render('article/article_premium.html.twig', [
+            'article' => $article,
+            'article_order' => $article_order,
         ]);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Article
      * @ORM\Column(type="boolean")
      */
     private $premium;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ArticleOrder::class, mappedBy="article")
+     */
+    private $articleOrders;
+
+    public function __construct()
+    {
+        $this->articleOrders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,36 @@ class Article
     public function setPremium(bool $premium): self
     {
         $this->premium = $premium;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleOrder[]
+     */
+    public function getArticleOrders(): Collection
+    {
+        return $this->articleOrders;
+    }
+
+    public function addArticleOrder(ArticleOrder $articleOrder): self
+    {
+        if (!$this->articleOrders->contains($articleOrder)) {
+            $this->articleOrders[] = $articleOrder;
+            $articleOrder->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleOrder(ArticleOrder $articleOrder): self
+    {
+        if ($this->articleOrders->removeElement($articleOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($articleOrder->getArticle() === $this) {
+                $articleOrder->setArticle(null);
+            }
+        }
 
         return $this;
     }

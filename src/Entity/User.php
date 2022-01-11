@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -50,6 +52,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      */
     private $premium;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ArticleOrder::class, mappedBy="user")
+     */
+    private $articleOrders;
+
+    public function __construct()
+    {
+        $this->articleOrders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -172,6 +184,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPremium(bool $premium): self
     {
         $this->premium = $premium;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleOrder[]
+     */
+    public function getArticleOrders(): Collection
+    {
+        return $this->articleOrders;
+    }
+
+    public function addArticleOrder(ArticleOrder $articleOrder): self
+    {
+        if (!$this->articleOrders->contains($articleOrder)) {
+            $this->articleOrders[] = $articleOrder;
+            $articleOrder->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleOrder(ArticleOrder $articleOrder): self
+    {
+        if ($this->articleOrders->removeElement($articleOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($articleOrder->getUser() === $this) {
+                $articleOrder->setUser(null);
+            }
+        }
 
         return $this;
     }

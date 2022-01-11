@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!
+{% endblock %}
+
+{% block content %}
+
+	{% if article_order %}
+
+		<div class="container">
+			<h1 class="text-center mt-4">Article premium n
+				{{ article.id }}</h1>
+
+			<div class="row">
+
+				<div class="show-article">
+					<h2>{{ article.title }}</h2>
+					<h4>{{ article.creationDate|date("d/m/Y \à H\\hi") }}</h4>
+					<p>{{article.content}}</p>
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<div class="container">
+
+			<h3>Article payant</h3>
+			Veuillez l'acheter ICI ou vous Abonner ICI
+		</div>
+	{% endif %}
+{% endblock %}

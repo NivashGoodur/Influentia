@@ -56,8 +56,8 @@
 		</nav>
 		{% if app.user %}
 			<p>Connecté en tant que :
-				{{app.user.name}}
-				{{app.user.firstname}}</p>
+				{{app.user.firstname}}
+				{{app.user.name}}</p>
 		{% endif %}
 
 		{% block content %}{% endblock %}
