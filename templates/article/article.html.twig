@@ -1,19 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArticleController!
+{% block title %}Influentia - Article
 {% endblock %}
 
 {% block content %}
 	<div class="container">
-		<h1 class="text-center mt-4">Article n {{ article.id }}</h1>
+		<h1 class="text-center mt-4">Article n
+			{{ article.id }}</h1>
 
-<div class="row">
+		{% if article.premium %}
+			<p>Cet article est payant</p>
+			<p>Retourner à la page d'accueil <a href="{{ path('home') }}">ici</a> </p>
+		{% else %}
+			<div class="row">
+	<p>Retourner à la page des articles <a href="{{ path('all_articles') }}">ici</a> </p>
+				<div class="show-article">
+					<h2>{{ article.title }}</h2>
+					<h4>{{ article.creationDate|date("d/m/Y \à H\\hi") }}</h4>
+					<p>{{article.content}}</p>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 
-    <div class="show-article">
-      <h2>{{ article.title }}</h2>
-      <h4>{{ article.creationDate|date("d/m/Y \à H\\hi") }}</h4>
-      <p>{{article.content}}</p>
-    </div>
-</div>
-	</div>
 {% endblock %}

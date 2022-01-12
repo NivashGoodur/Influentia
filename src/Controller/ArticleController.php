@@ -70,6 +70,22 @@ class ArticleController extends AbstractController
     public function showPremiumArticles(Request $request, PaginatorInterface $paginator): Response
     {
 
+        //Redirection sur la page de connexion si l'utilisateur n'est pas connecté 
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
+        $user = $this->security->getUser();
+        $userId = $user->getId();
+
+        //Récupération des commandes de l'utilisateur
+
+
+        $article_order = $this->entityManager->getRepository(ArticleOrder::class)->findBy(
+            array('user' => $userId)
+        );
+
+        // dd($article_order);
+
 
         // On récupère dans l'url la données GET page (si elle n'existe pas, la valeur retournée par défaut sera la page 1)
         $requestedPage = $request->query->getInt('page', 1);
@@ -97,6 +113,7 @@ class ArticleController extends AbstractController
 
         return $this->render('article/all_premium_articles.html.twig', [
             'articles' => $pageArticles,
+            'article_order' => $article_order,
         ]);
     }
 

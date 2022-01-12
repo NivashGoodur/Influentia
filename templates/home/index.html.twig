@@ -3,5 +3,43 @@
 {% block content %}
 	<div class="container">
 		<h1 class="text-center	">Influentia -Accueil</h1>
+		<p>Derniers articles :
+		</p>
+		<div class="row">
+
+
+			{% for article in articles %}
+				<div class="col-4 mt-5">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">{{ article.title }}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">{{ article.CreationDate|date("d/m/Y \à H\\hi") }}</h6>
+							<p class="card-text">{{ article.content|slice(0,50) }}</p>
+						</div>
+						<a href="{{ path('article', {id: article.id}) }}" class="card-link btn btn-info">Lire l'article</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+
+		<p class="mt-5">Derniers articles Premium :
+		</p>
+		<div class="row">
+
+
+			{% for article in articles_premium %}
+				<div class="col-4 mt-5">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">{{ article.title }}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">{{ article.CreationDate|date("d/m/Y \à H\\hi") }}</h6>
+							<p class="card-text">{{ article.content|slice(0,50) }}</p>
+						</div>
+						<a href="{{ path('all_premium_articles') }}" class="card-link btn btn-danger">Voir la page des articles premium</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 	</div>
 {% endblock %}

@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArticleController!
+{% block title %}Influentia - Premium Article
 {% endblock %}
 
 {% block content %}
+
 
 	{% if article_order %}
 
@@ -12,6 +13,7 @@
 				{{ article.id }}</h1>
 
 			<div class="row">
+			<p>Retourner à la page des articles premium <a href="{{ path('all_premium_articles') }}">ici</a> </p>	
 
 				<div class="show-article">
 					<h2>{{ article.title }}</h2>

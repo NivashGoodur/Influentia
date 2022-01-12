@@ -44,6 +44,11 @@ class Article
      */
     private $articleOrders;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
     public function __construct()
     {
         $this->articleOrders = new ArrayCollection();
@@ -128,6 +133,18 @@ class Article
                 $articleOrder->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

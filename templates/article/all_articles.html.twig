@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArticleController!
+{% block title %}Influentia - Articles
 {% endblock %}
 
 {% block content %}
@@ -26,8 +26,8 @@
 							<h5 class="card-title">{{ article.title }}</h5>
 							<h6 class="card-subtitle mb-2 text-muted">{{ article.CreationDate|date("d/m/Y \à H\\hi") }}</h6>
 							<p class="card-text">{{ article.content|slice(0,50) }}</p>
-							<a href="{{ path('article', {id: article.id}) }}" class="card-link btn btn-primary">Lire l'article</a>
 						</div>
+							<a href="{{ path('article', {id: article.id}) }}" class="card-link btn btn-info">Lire l'article</a>
 					</div>
 				</div>
 			{% endfor %}

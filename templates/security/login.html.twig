@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Influentia - Connexion{% endblock %}
 
 {% block content %}
 	<div class="container">
@@ -40,6 +40,7 @@
 			<button class="btn btn-lg btn-primary" type="submit">
 				Se connecter
 			</button>
+			<p class="text-center">Ou s'inscrire  : <a href="{{ path('register') }}">ici</a></p>
 		</form>
 	</div>
 {% endblock %}

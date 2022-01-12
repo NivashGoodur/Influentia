@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -25,6 +26,7 @@ class ArticleCrudController extends AbstractCrudController
             TextField::new('title'),
             TextEditorField::new('content'),
             BooleanField::new('premium'),
+            MoneyField::new('price')->setCurrency('EUR'),
             DateTimeField::new('creation_date'),
         ];
     }

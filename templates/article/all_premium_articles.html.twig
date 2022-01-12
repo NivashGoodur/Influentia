@@ -1,22 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArticleController!
+{% block title %}Influentia - Articles Premium
 {% endblock %}
 
 {% block content %}
 	<div class="container">
+
 		<h1 class="text-center mt-4">Liste des articles Premium</h1>
 		<p>Nombre total d'articles premium :
 			{{ articles.getTotalItemCount }}</p>
 
 
-			<p
-				class="text-center my-3">
-				{# Création d'un lien permettant de trier par titre #}
-				<span class="mx-2">{{ knp_pagination_sortable(articles, 'Trier par titre', 'a.title') }}</span>
-				{# Création d'un lien permettant de trier par date #}
-				<span class="mx-2">{{ knp_pagination_sortable(articles, 'Trier par Date', 'a.creation_date') }}</span>
-			</p>
+		<p
+			class="text-center my-3">
+			{# Création d'un lien permettant de trier par titre #}
+			<span class="mx-2">{{ knp_pagination_sortable(articles, 'Trier par titre', 'a.title') }}</span>
+			{# Création d'un lien permettant de trier par date #}
+			<span class="mx-2">{{ knp_pagination_sortable(articles, 'Trier par Date', 'a.creation_date') }}</span>
+		</p>
+
 		<div class="row">
 
 			{% for article in articles %}
@@ -26,8 +28,14 @@
 							<h5 class="card-title">{{ article.title }}</h5>
 							<h6 class="card-subtitle mb-2 text-muted">{{ article.CreationDate|date("d/m/Y \à H\\hi") }}</h6>
 							<p class="card-text">{{ article.content|slice(0,50) }}</p>
-							<a href="{{ path('article_premium', {id: article.id}) }}" class="card-link btn btn-info">Lire l'article</a>
+							<a href="{{ path('stripe_create_session', {id: article.id}) }}" class="card-link btn btn-danger">Acheter l'article :
+								{{ article.price / 100 }}€</a>
 						</div>
+						{% for articleacheté in article_order %}
+							{% if articleacheté.article.id == article.id  and  articleacheté.buy %}
+								<a href="{{ path('article_premium', {id: article.id}) }}" class="card-link btn btn-info">Lire l'article</a>
+							{% endif %}
+						{% endfor %}
 					</div>
 				</div>
 			{% endfor %}
