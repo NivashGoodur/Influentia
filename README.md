@@ -22,4 +22,4 @@ Faire le site sans api, et n'implémenter que le système de vente d'articles pr
 
 ## Technologies utilisées
 
-Git, Symfony 5, Bootstrap, Stripe, Fixtures Faker.
+Git, Symfony 5, Bootstrap, Stripe, Fixtures Faker, Twig, SQL.
