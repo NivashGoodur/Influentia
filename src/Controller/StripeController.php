@@ -46,7 +46,7 @@ class StripeController extends AbstractController
 
         //Si l'article est déjà acheté on revoie l'utilisateur sur la page de l'article
         if ($article_order) {
-            return $this->redirectToRoute('all_premium_articles');
+            return $this->redirectToRoute('article_premium', array('id' => $article->getId()));
         } else {
             $YOUR_DOMAIN = 'http://127.0.0.1:8000';
 
@@ -85,10 +85,8 @@ class StripeController extends AbstractController
 
             return $this->redirect($checkout_session->url);
         }
-
-        
     }
-    
+
 
 
     /**
